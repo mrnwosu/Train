@@ -57,3 +57,14 @@ model VerificationToken {
 
     @@unique([identifier, token])
 }
+
+model Movement {
+    id                                     Int    @id @default(autoincrement())
+    categoryName                           String
+    targetMuscleGroup                      String
+    movementName                           String
+    catHiit                                Boolean
+    literalMuscledAffected                 String[]
+    literalMusclesAffectedCommonName       String[]
+    averageCaloriesBurntAfterThirtySeconds Int
+}

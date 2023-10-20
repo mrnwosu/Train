@@ -1,3 +1,29 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Paytone+One&display=swap');
+
+.fadeTitle{
+    opacity: 0;
+}
+
+.fadeTitle-active{
+    opacity: 1;
+    transition: opacity 1s ease-in-out;
+}
+
+#pullup-image{
+    --tw-scale-x: 1.5;
+    --tw-scale-y: 1.5;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.fadeInInfo{
+    opacity: 0;
+}
+
+.fadeInInfo-active{
+    opacity: 1;
+    transition: opacity 1s ease-in-out;
+}
