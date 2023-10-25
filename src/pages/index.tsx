@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useEffect } from "react";
 import _ from "lodash";
 import { useSession } from "next-auth/react";
-import { AuthShowcase } from "./UserActions";
+import { UserActions } from "../components/UserActions";
 
 export default function Home() {
   const hello = api.post.hello.useQuery({ text: "from tRPC" });
@@ -70,7 +70,7 @@ export default function Home() {
         <header className=" absolute z-20 h-12 w-screen">
           <nav className=" flex flex-row items-center justify-end p-4">
             <div className=" flex flex-row items-center justify-between gap-4">
-              <AuthShowcase />
+              <UserActions />
             </div>
           </nav>
         </header>
