@@ -101,7 +101,7 @@ export default function Home() {
           <div className=" top-12 z-10 my-10 flex flex-row gap-4">
             <button
               id="viewProgramsButton"
-              className=" h-fit w-fit border-2 border-zinc-900 bg-zinc-800 px-8 py-2 text-lg transition hover:border-yellow-500 hover:bg-zinc-500"
+              className=" h-fit w-fit border-2 border-zinc-900 bg-zinc-800 px-8 py-2 text-lg transition duration-500 hover:border-yellow-500 hover:bg-zinc-500"
             >
               View Programs
             </button>
