@@ -1,15 +1,11 @@
 import Head from "next/head";
-import { api } from "~/utils/api";
 import Image from "next/image";
 import { useEffect } from "react";
 import _ from "lodash";
-import { useSession } from "next-auth/react";
 import { UserActions } from "../components/UserActions";
 import { isMobile } from "react-device-detect";
 
 export default function Home() {
-  const hello = api.post.hello.useQuery({ text: "from tRPC" });
-  const { data: session } = useSession();
 
   useEffect(() => {
     function handleIntersection(

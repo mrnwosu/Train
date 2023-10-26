@@ -27,3 +27,19 @@
     opacity: 1;
     transition: opacity 1s ease-in-out;
 }
+
+::-webkit-scrollbar {
+    width: 4px;
+}
+ 
+/* Track */
+::-webkit-scrollbar-track {
+    background:  rgb(161 161 170);
+    border-radius: 5px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #000;
+    border-radius: 5px;
+}

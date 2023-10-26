@@ -13,10 +13,16 @@ const MyApp: AppType<{ session: Session | null }> = ({
 }) => {
   return (
     <SessionProvider session={session}>
-      <Component {...pageProps} />
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
       <Analytics />
     </SessionProvider>
   );
 };
+
+function Layout({ children }) {
+  return <div className=" scrp">{children}</div>;
+}
 
 export default api.withTRPC(MyApp);
