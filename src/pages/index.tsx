@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import _ from "lodash";
 import { useSession } from "next-auth/react";
 import { UserActions } from "../components/UserActions";
+import { isMobile } from "react-device-detect";
 
 export default function Home() {
   const hello = api.post.hello.useQuery({ text: "from tRPC" });
@@ -32,10 +33,11 @@ export default function Home() {
     }
     const infoElements = document.getElementsByClassName("fadeInInfo");
 
+    const threshold = isMobile ? 0.5 : 0.2;
     const observer = new IntersectionObserver(handleIntersection, {
       root: null,
       rootMargin: "0px",
-      threshold: 0.2,
+      threshold: threshold
     });
 
     _.each(infoElements, (element) => {
