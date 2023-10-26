@@ -33,7 +33,7 @@ export default function Home() {
     }
     const infoElements = document.getElementsByClassName("fadeInInfo");
 
-    const threshold = isMobile ? 0.5 : 0.2;
+    const threshold = isMobile ? 0.3 : 0.2;
     const observer = new IntersectionObserver(handleIntersection, {
       root: null,
       rootMargin: "0px",
