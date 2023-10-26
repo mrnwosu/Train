@@ -192,10 +192,10 @@ export default function Home() {
         </section>
 
         <footer className=" flex h-1/5 flex-row justify-end gap-4 bg-zinc-900 p-4">
-          <a className=" transition hover:scale-[1.05] hover:text-yellow-600">
+          <a className=" transition hover:scale-[1.02] hover:text-yellow-200">
             Contact Me
           </a>
-          <a className=" transition hover:scale-[1.05] hover:text-yellow-600">
+          <a className=" transition hover:scale-[1.02] hover:text-yellow-200">
             About this Site
           </a>
         </footer>
