@@ -37,7 +37,7 @@ export default function Home() {
     const observer = new IntersectionObserver(handleIntersection, {
       root: null,
       rootMargin: "0px",
-      threshold: threshold
+      threshold: threshold,
     });
 
     _.each(infoElements, (element) => {
@@ -83,7 +83,7 @@ export default function Home() {
             alt="Ropes"
             className=" translate-y-6 scale-110 grayscale md:translate-x-12 lg:translate-x-12"
           />
-          <div className=" relative left-6 top-24 flex flex-col items-start gap-8 md:gap-4 lg:left-48 md:left-12 lg:top-20 lg:gap-4">
+          <div className=" relative left-6 top-24 flex flex-col items-start gap-8 md:left-12 md:gap-4 lg:left-48 lg:top-20 lg:gap-4">
             <h1 className=" fadeTitle text-center text-8xl font-bold  text-black">
               Live
             </h1>
@@ -118,26 +118,24 @@ export default function Home() {
         </div>
 
         {/* Online Div */}
-        <section className=" relative bg-gradient-to-r from-[#0E0900] object-fill to-black lg:p-4 md:p-4">
+        <section className=" relative bg-gradient-to-r from-[#0E0900] to-black object-fill md:p-4 lg:p-4">
           <div className="fadeInInfo flex flex-auto flex-col justify-center gap-10 md:flex-row lg:flex-row ">
-            <div className=" flex h-96 lg:w-1/3 md:w-1/2 flex-col items-center rounded-lg p-1 lg:p-0 md:p-0">
-              <h1 className=" mt-6 text-center text-3xl font-bold">
-                Onine
-              </h1>
-              <p className="mt-6 text-center lg:text-left md:text-left lg:w-5/6 md:w-5/6"> 
+            <div className=" flex h-96 flex-col items-center rounded-lg p-1 md:w-1/2 md:p-0 lg:w-1/3 lg:p-0">
+              <h1 className=" mt-6 text-center text-3xl font-bold">Onine</h1>
+              <p className="mt-6 text-center md:w-5/6 md:text-left lg:w-5/6 lg:text-left">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis
                 voluptate, voluptatem, doloremque, quae doloribus voluptatum
                 vero quas voluptas voluptatibus nemo cumque. Quisquam, quae
                 voluptas. Quisquam, quae voluptas.
               </p>
-              <p className="mt-6 text-center lg:text-left md:text-left lg:w-5/6 md:w-5/6">
+              <p className="mt-6 text-center md:w-5/6 md:text-left lg:w-5/6 lg:text-left">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis
                 voluptate, voluptatem, doloremque, quae doloribus voluptatum
                 vero quas voluptas voluptatibus nemo cumque. Quisquam, quae
                 voluptas. Quisquam, quae voluptas.
               </p>
             </div>
-            <div className=" relative h-24 lg:h-96 md:h-96 md:w-1/2 lg:w-1/3 overflow-hidden rounded-lg">
+            <div className=" relative h-24 overflow-hidden rounded-lg md:h-96 md:w-1/2 lg:h-96 lg:w-1/3">
               <Image
                 src={"/online.jpg"}
                 alt="Online Training"
@@ -151,35 +149,50 @@ export default function Home() {
         </section>
 
         {/* In Person Div */}
-        <section className=" relative bg-gradient-to-r from-black to-zinc-900 lg:p-10 md:p-10">
-          <div className="fadeInInfo flex flex-auto flex-col lg:flex-row md:flex-row justify-center gap-10">
-            <div className=" relative h-24 lg:h-96 md:h-96 lg:w-1/3 md:w-1/2 overflow-hidden rounded-lg bg-black">
-              <Image
-                src={"/deadlift.jpg"}
-                alt="Online Training"
-                objectFit="cover"
-                layout="fill"
-                className="
-              scale-110 opacity-40 grayscale transition duration-300 ease-in hover:scale-100 hover:opacity-100 hover:grayscale-0"
-              />
-            </div>
-            <div className=" flex h-96 lg:w-1/3 md:w-1/2 flex-col items-center rounded-lg p-1 lg:p-0 md:p-0">
+        <section className=" relative bg-gradient-to-r from-black to-zinc-900 md:p-10 lg:p-10">
+          <div className="fadeInInfo flex flex-auto flex-col justify-center gap-10 md:flex-row lg:flex-row">
+            {!isMobile ? (
+              <div className=" relative h-24 overflow-hidden rounded-lg bg-black md:h-96 md:w-1/2 lg:h-96 lg:w-1/3">
+                <Image
+                  src={"/deadlift.jpg"}
+                  alt="Online Training"
+                  objectFit="cover"
+                  layout="fill"
+                  className="
+                scale-110 opacity-40 grayscale transition duration-300 ease-in hover:scale-100 hover:opacity-100 hover:grayscale-0"
+                />
+              </div>
+            ) : null}
+            <div className=" flex h-96 flex-col items-center rounded-lg p-1 md:w-1/2 md:p-0 lg:w-1/3 lg:p-0">
               <h1 className=" mt-6 text-center text-3xl font-bold">
                 In person
               </h1>
-              <p className="mt-6 text-center lg:text-left md:text-left lg:w-5/6 md:w-5/6">
+              <p className="mt-6 text-center md:w-5/6 md:text-left lg:w-5/6 lg:text-left">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis
                 voluptate, voluptatem, doloremque, quae doloribus voluptatum
                 vero quas voluptas voluptatibus nemo cumque. Quisquam, quae
                 voluptas. Quisquam, quae voluptas.
               </p>
-              <p className="mt-6 text-center lg:text-left md:text-left lg:w-5/6 md:w-5/6">
+              <p className="mt-6 text-center md:w-5/6 md:text-left lg:w-5/6 lg:text-left">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis
                 voluptate, voluptatem, doloremque, quae doloribus voluptatum
                 vero quas voluptas voluptatibus nemo cumque. Quisquam, quae
                 voluptas. Quisquam, quae voluptas.
               </p>
             </div>
+            {/* Bad Workaround  */}
+            {isMobile ? (    
+              <div className=" relative h-24 overflow-hidden rounded-lg bg-black md:h-96 md:w-1/2 lg:h-96 lg:w-1/3">
+                <Image
+                  src={"/deadlift.jpg"}
+                  alt="Online Training"
+                  objectFit="cover"
+                  layout="fill"
+                  className="
+  scale-110 opacity-40 grayscale transition duration-300 ease-in hover:scale-100 hover:opacity-100 hover:grayscale-0"
+                />
+              </div>
+            ) : null}
           </div>
         </section>
 
