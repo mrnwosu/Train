@@ -112,8 +112,7 @@ export default function Home() {
             alt="Online Training"
             objectFit="cover"
             layout="fill"
-            className=" 
-                absolute opacity-20 grayscale transition"
+            className=" absolute opacity-20 grayscale transition"
           />
         </div>
 
