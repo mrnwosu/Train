@@ -66,14 +66,14 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="relative flex flex-col bg-black font-paytone text-white">
-        <header className=" absolute z-20 h-12 w-screen">
+        <header className=" absolute z-20 h-12 w-full">
           <nav className=" flex flex-row items-center justify-end p-4">
             <div className=" flex flex-row items-center justify-between gap-4">
-              <UserActions />
+              <UserActions  />
             </div>
           </nav>
         </header>
-        <div className=" relative h-[38em] w-screen overflow-hidden">
+        <div className=" relative h-[38em] overflow-hidden">
           <Image
             src={"/ropes.jpg"}
             id="ropes-bg"
@@ -195,7 +195,7 @@ export default function Home() {
           </div>
         </section>
 
-        <footer className=" flex h-1/5 w-screen flex-row justify-end gap-4 bg-zinc-900 p-4">
+        <footer className=" flex h-1/5 flex-row justify-end gap-4 bg-zinc-900 p-4">
           <a className=" transition hover:scale-[1.05] hover:text-yellow-600">
             Contact Me
           </a>

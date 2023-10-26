@@ -62,8 +62,8 @@ export const authOptions: NextAuthOptions = {
           prompt: "consent",
           response_type: "code"
         }
-      }
-    })
+      },
+    }),
     /**
      * ...add more providers here.
      *
