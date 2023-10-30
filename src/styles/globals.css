@@ -13,6 +13,10 @@
     transition: opacity 1s ease-in-out;
 }
 
+.le-header-active{
+    @apply bg-zinc-950 bg-opacity-100
+}
+
 #pullup-image{
     --tw-scale-x: 1.5;
     --tw-scale-y: 1.5;

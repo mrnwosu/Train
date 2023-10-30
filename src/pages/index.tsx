@@ -2,7 +2,6 @@ import Head from "next/head";
 import Image from "next/image";
 import { useEffect } from "react";
 import _ from "lodash";
-import { UserActions } from "../components/UserActions";
 import { isMobile } from "react-device-detect";
 
 export default function Home() {
@@ -10,12 +9,11 @@ export default function Home() {
   useEffect(() => {
     function handleIntersection(
       entries: IntersectionObserverEntry[],
-      observer: IntersectionObserver,
     ) {
       const viewProgramButton = document.getElementById("viewProgramsButton");
       const firstInfoSection = document.getElementsByClassName("fadeInInfo")[0];
 
-      entries.forEach((entry) => {
+      entries.forEach((entry) => {``
         if (entry.isIntersecting) {
           entry.target.classList.add("fadeInInfo-active");
           viewProgramButton?.style.setProperty("opacity", "0");
@@ -62,13 +60,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="relative flex flex-col bg-black font-paytone text-white">
-        <header className=" absolute z-20 h-12 w-full">
-          <nav className=" flex flex-row items-center justify-end p-4">
-            <div className=" flex flex-row items-center justify-between gap-4">
-              <UserActions  />
-            </div>
-          </nav>
-        </header>
+        
         <div className=" relative h-[38em] overflow-hidden">
           <Image
             src={"/ropes.jpg"}

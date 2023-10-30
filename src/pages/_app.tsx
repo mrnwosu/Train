@@ -6,6 +6,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { api } from "~/utils/api";
 
 import "~/styles/globals.css";
+import { Layout } from "./Layout";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -20,9 +21,5 @@ const MyApp: AppType<{ session: Session | null }> = ({
     </SessionProvider>
   );
 };
-
-function Layout({ children }) {
-  return <div className=" scrp">{children}</div>;
-}
 
 export default api.withTRPC(MyApp);
