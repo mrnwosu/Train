@@ -6,6 +6,7 @@ export function Layout({ children }) {
   const pagesToHideHeader = [
     '/auth/signin'
   ]
+
   function handleScrollForNavbar(){
     const header = document.querySelector(".le-header");
     const scrollPercent = (window.scrollY / window.innerHeight);
@@ -19,7 +20,6 @@ export function Layout({ children }) {
 
   useEffect(() => {
     window.addEventListener("scroll", handleScrollForNavbar);
-    
     setShouldLoadHeader(!pagesToHideHeader.includes(window.location.pathname))
     
     return () => {

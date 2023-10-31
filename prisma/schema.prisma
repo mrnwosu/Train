@@ -48,6 +48,12 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
+    role          Role      @default(CLIENT)
+}
+
+enum Role {
+    TRAINER
+    CLIENT
 }
 
 model VerificationToken {
@@ -59,7 +65,7 @@ model VerificationToken {
 }
 
 model Movement {
-    id                                     Int    @id @default(autoincrement())
+    id                                     Int       @id @default(autoincrement())
     categoryName                           String
     targetMuscleGroup                      String
     movementName                           String
@@ -67,4 +73,16 @@ model Movement {
     literalMuscledAffected                 String[]
     literalMusclesAffectedCommonName       String[]
     averageCaloriesBurntAfterThirtySeconds Int
+    Workouts                               Workout[]
+}
+
+model Workout {
+    id             Int        @id @default(autoincrement())
+    userId         String
+    workoutName    String
+    movements      Movement[]
+    sets           Int
+    breakSets      Int?
+    breakReps      Int?
+    timeDuringReps Int?
 }

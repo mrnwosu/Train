@@ -1,4 +1,4 @@
-import { Movement, PrismaClient } from "@prisma/client";
+import { type Movement, PrismaClient } from "@prisma/client";
 import { Service } from "typedi";
 
 @Service()
