@@ -6,7 +6,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { api } from "~/utils/api";
 
 import "~/styles/globals.css";
-import { Layout } from "./Layout";
+import Layout  from "./Layout";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,

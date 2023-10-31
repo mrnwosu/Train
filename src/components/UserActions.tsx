@@ -2,7 +2,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useEffect, useState} from "react";
 
-export function UserActions() {
+export default function UserActions() {
   const { data: sessionData } = useSession();
   const [shouldShowViewDashboardButton, setShouldShowViewDashboardButton] = useState(false)
   const pagesToHideViewDashboardButton = [

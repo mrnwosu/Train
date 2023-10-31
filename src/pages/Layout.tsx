@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { UserActions } from "~/components/UserActions";
+import UserActions from "~/components/UserActions";
 
-export function Layout({ children }) {
+export default function Layout({ children }) {
   const [shouldLoadHeader, setShouldLoadHeader] = useState(false)
   const pagesToHideHeader = [
     '/auth/signin'
