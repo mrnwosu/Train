@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { UserActions } from "~/components/UserActions";
 
 export function Layout({ children }) {
@@ -18,7 +18,6 @@ export function Layout({ children }) {
   }
 
   useEffect(() => {
-    const navbar = document.querySelector(".le-header");
     window.addEventListener("scroll", handleScrollForNavbar);
     
     setShouldLoadHeader(!pagesToHideHeader.includes(window.location.pathname))
