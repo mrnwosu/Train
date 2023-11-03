@@ -13,7 +13,7 @@ export default function Home() {
       const viewProgramButton = document.getElementById("viewProgramsButton");
       const firstInfoSection = document.getElementsByClassName("fadeInInfo")[0];
 
-      entries.forEach((entry) => {``
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add("fadeInInfo-active");
           viewProgramButton?.style.setProperty("opacity", "0");

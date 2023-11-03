@@ -49,6 +49,7 @@ model User {
     accounts      Account[]
     sessions      Session[]
     role          Role      @default(CLIENT)
+    workouts      Workout[]
 }
 
 enum Role {
@@ -85,4 +86,5 @@ model Workout {
     breakSets      Int?
     breakReps      Int?
     timeDuringReps Int?
+    creator        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

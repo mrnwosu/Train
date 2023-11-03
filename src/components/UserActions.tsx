@@ -2,7 +2,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useEffect, useState} from "react";
 
-export default function UserActions() {
+export const UserActions = () => {
   const { data: sessionData } = useSession();
   const [shouldShowViewDashboardButton, setShouldShowViewDashboardButton] = useState(false)
   const pagesToHideViewDashboardButton = [
@@ -10,11 +10,19 @@ export default function UserActions() {
   ]
 
   useEffect(() => {
-    setShouldShowViewDashboardButton(!pagesToHideViewDashboardButton.includes(window.location.pathname))
+    const pathName = window.location.pathname.toLowerCase()
+    const shouldShow = !pagesToHideViewDashboardButton.includes(pathName)
+    setShouldShowViewDashboardButton(shouldShow)
+    
+    if(pathName.includes('dashboard')){
+      const header = document.querySelector(".le-header");
+      header?.classList.add("top-2");
+    }
+    
   }, [])
 
   return (
-    <div className="flex flex-row items-center justify-center gap-4">
+    <div className=" le-header relative flex flex-row items-center justify-center gap-4">
       <p className="text-center text-lg text-white">
         {sessionData && <span>{sessionData.user?.name}</span>}
       </p>

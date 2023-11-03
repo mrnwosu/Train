@@ -6,7 +6,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { api } from "~/utils/api";
 
 import "~/styles/globals.css";
-import Layout  from "./Layout";
+import AppLayout  from "./AppLayout";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -14,9 +14,9 @@ const MyApp: AppType<{ session: Session | null }> = ({
 }) => {
   return (
     <SessionProvider session={session}>
-      <Layout>
+      <AppLayout>
         <Component {...pageProps} />
-      </Layout>
+      </AppLayout>
       <Analytics />
     </SessionProvider>
   );

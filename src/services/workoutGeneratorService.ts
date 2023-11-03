@@ -9,7 +9,7 @@ import { type Movement } from '@prisma/client';
 export class WorkoutGeneratorService{
     
     constructor(
-        public openAiService: OpenAIService
+        private openAiService: OpenAIService
     ){}
     
     async getMovements(majorBodyPart: string, workoutNumbers: number){

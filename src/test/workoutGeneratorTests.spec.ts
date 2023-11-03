@@ -5,7 +5,7 @@ import { services } from '~/services/serviceMagik'
 
 describe('Should generate a workout', () => {
 
-    const {workoutGeneratorService, movementService } = services
+    const {generatorSerivce: workoutGeneratorService, movementService } = services
 
     it('Should generate a workout', async() => {
         const parts = ['abs', 'chest', 'back', 'shoulders', 'arms', 'legs']

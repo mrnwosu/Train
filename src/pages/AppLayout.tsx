@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import UserActions from "~/components/UserActions";
+import { UserActions } from "~/components/UserActions";
 
-export default function Layout({ children }) {
+export default function AppLayout({ children }) {
   const [shouldLoadHeader, setShouldLoadHeader] = useState(false)
   const pagesToHideHeader = [
     '/auth/signin'
@@ -27,7 +27,7 @@ export default function Layout({ children }) {
     };
   }, [])
 
-  return <div className=" ">
+  return <div className=" bg-zinc-950 text-white h-screen font-paytone">
     {shouldLoadHeader && <header className=" bg-opacity-0 le-header fixed z-20 w-full px-4 py-2 duration-300">
           <nav className="flex flex-row items-center justify-end">
             <div className=" flex flex-row items-center justify-between gap-4 [&_button]:bg-opacity-0">

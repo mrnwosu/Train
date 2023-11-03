@@ -1,14 +1,27 @@
+import { DashboardMenu } from "~/components/DasbhoardMenu";
+import { DashboardCell } from "~/components/DashboardCell";
+import DashboardLayout from "./DashboardLayout";
 import { useSession } from "next-auth/react";
 
 export default function Dashboard() {
-  const { data: sessionData } = useSession();
+  const { data } = useSession();
 
-  if (!sessionData) {
-    return <div>Not logged in</div>;
-  }
+    //add guards.
 
-  return <div>{JSON.stringify(sessionData.user.id)}</div>;
-
-//   const user = api.user.getUser.useQuery(sessionData?.user?.id);
-//   return <div>{user.data?.name}</div>;
+  return (
+    <DashboardLayout>
+      <DashboardCell
+        title="Upcoming Workouts"
+        description="This is A Description"
+      >
+        <div>random</div>
+      </DashboardCell>
+      <DashboardCell
+        title="This weeks goals"
+        description="This is A Description"
+      >
+        <div>random</div>
+      </DashboardCell>
+    </DashboardLayout>
+  );
 }
