@@ -1,18 +1,17 @@
-import { Movement } from '@prisma/client'
+import { type Movement } from '@prisma/client'
 import { assert } from 'chai'
 import _ from 'lodash'
-import { services } from '~/services/serviceMagik'
+import { generatorSerivce, movementService  } from '~/services/serviceMagik'
 
 describe('Should generate a workout', () => {
 
-    const {generatorSerivce: workoutGeneratorService, movementService } = services
 
     it('Should generate a workout', async() => {
         const parts = ['abs', 'chest', 'back', 'shoulders', 'arms', 'legs']
         const allMovements: Movement[] = []
 
         _.each(parts, async(part) => {
-            const movements = await workoutGeneratorService.getMovements(part, 15)
+            const movements = await generatorSerivce.getMovements(part, 15)
             allMovements.push(...movements)
         })
 

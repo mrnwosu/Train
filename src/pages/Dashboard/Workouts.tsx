@@ -1,11 +1,14 @@
 import { api } from "~/utils/api";
 import DashboardLayout from "./DashboardLayout";
-import { useState } from "react";
-import { Movement } from "@prisma/client";
+import { useEffect, useState } from "react";
+import { type Movement } from "@prisma/client";
 
 export default function Workouts() {
   const [movements, setMovements] = useState<Movement[]>([]);
-  setMovements(api.movement.getMovements.useQuery()?.data ?? []);
+
+  useEffect(() => {
+    setMovements(api.movement.getMovements.useQuery()?.data ?? []);
+  },[]);
   const generateMovements = api.movement.generateMovement.useMutation();
 
 
