@@ -25,11 +25,11 @@ export class OpenAIService {
                     role: "user",
                     content: prompt
                 }
-            ]
+            ],
+            max_tokens: 3800,
         })
 
         const choice = _.first(completion.choices)
-        const content = choice?.message?.content
         dumpToFileForDev('openai', completion)
         return choice?.message?.content
     }

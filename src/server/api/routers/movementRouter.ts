@@ -3,9 +3,22 @@ import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { generatorSerivce, movementService } from "~/services/serviceMagik";
 
 export const movementRouter = createTRPCRouter({
-  getMovements: publicProcedure.query(async ({ ctx }) => {
-    return ctx.db.movement.findMany();
-  }),
+  getMovements: publicProcedure
+    .input(z.object({ targetMuscleGroups: z.string().optional() }))
+    .query(async ({ ctx, input }) => {
+      if (!input.targetMuscleGroups || input.targetMuscleGroups === "All") {
+        return ctx.db.movement.findMany();
+      }
+      else{
+        return ctx.db.movement.findMany({
+          where: {
+            targetMuscleGroups: {
+              contains: input.targetMuscleGroups,
+            },
+          },
+        });
+      }
+    }),
   generateMovements: publicProcedure
     .input(
       z.object({ majorBodyPart: z.string(), numberOfMovements: z.number() }),
@@ -16,7 +29,7 @@ export const movementRouter = createTRPCRouter({
         input.numberOfMovements,
       );
 
-      console.log('result in routers', { result });
+      console.log("result in routers", { result });
       await movementService.createMovements(result);
     }),
   createMovements: publicProcedure

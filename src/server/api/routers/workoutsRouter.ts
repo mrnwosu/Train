@@ -7,7 +7,8 @@ import {
 } from "~/server/api/trpc";
 
 export const workoutRouter = createTRPCRouter({
-  getWorkouts: publicProcedure.query(async ({ ctx }) => {
+  getWorkouts: publicProcedure
+  .query(async ({ ctx }) => {
     const creator = ctx.session?.user.id;
     if (!creator) {
       return [];

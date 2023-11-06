@@ -30,6 +30,7 @@ export class MovementService {
   async createMovements(movements: Movement[]) {
     const targetMuscleGroups = _.uniq(_.map(movements, "targetMuscleGroups"));
 
+    console.log("targetMuscleGroups", {targetMuscleGroups});
     const allWorkouts = await this.client.movement.findMany({
       where: {
         targetMuscleGroups: {

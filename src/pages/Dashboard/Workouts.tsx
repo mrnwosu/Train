@@ -2,10 +2,17 @@ import { api } from "~/utils/api";
 import DashboardLayout from "./DashboardLayout";
 import { useSession } from "next-auth/react";
 import { $Enums } from "@prisma/client";
+import { useState } from "react";
 
 export default function Workouts() {
+  const [currentMovementFilter, setCurrentMovementFilter] = useState<
+    string | undefined
+  >(undefined);
+
+  const movementData = api.movement.getMovements.useQuery({
+    targetMuscleGroups: currentMovementFilter,
+  });
   const workoutData = api.workout.getWorkouts.useQuery();
-  const movementData = api.movement.getMovements.useQuery();
 
   const workouts = workoutData.data ?? [];
   const movements = movementData.data ?? [];
@@ -14,60 +21,109 @@ export default function Workouts() {
   const generateMovements = api.movement.generateMovements.useMutation();
 
   const isTrainer = user?.data?.role === $Enums.Role.TRAINER;
+  console.log({ isTrainer });
 
   return (
     <DashboardLayout>
-      <div>
-        {isTrainer && <h1>This is a trainer</h1>}
-        <h1></h1>
-        <h1>Movements</h1>
-        {movements.length > 0 ? (
-          movements.map((movement) => {
-            return (
-              <div key={`${movement.movementName}_${movement.id}`}>
-                <h1>{movement.movementName}</h1>
-                <p>{movement.categoryName}</p>
-                {movement.literalMusclesAffected && (
-                  <p>{movement.literalMusclesAffected}</p>
-                )}
-              </div>
-            );
-          })
-        ) : (
-          <p>No Movements</p>
-        )}
-        <form id="movementGeneratorForm" className=" flex flex-row gap-4 text-black">
-          <input
-            type="text"
-            name="movementMuscleGroup"
-            placeholder="Main Muscle Group Name"
-            defaultValue={"Chest"}
-          />
-          <input type="number" defaultValue={1} name="movementGeneratingNumber" placeholder="Count" />
-          <button
-            className=" hover:text-yellow-600 text-white"
-            onClick={(e) => {
-              e.preventDefault();
-              const form = document.getElementById("movementGeneratorForm") as HTMLFormElement
-              if(!form) {
-                console.error("Form not found")
-                return
-              }
-              const formData = new FormData(form)
-              const data = Object.fromEntries(formData.entries())
-              const majorBodyPart = (data.movementMuscleGroup ?? "Chest") as string
-              const numberOfMovements = parseInt((data.movementGeneratingNumber as string ?? "1"))
-
-              generateMovements.mutate({
-                majorBodyPart: majorBodyPart,
-                numberOfMovements: numberOfMovements,
+      <div className=" flex flex-col gap-2">
+        {isTrainer && <h1 className=" text-2xl">Workout & Movement Page</h1>}
+        <div className=" flex flex-col gap-2 rounded-lg border-2 border-zinc-800 p-4">
+          <div className=" flex flex-grow flex-row justify-between">
+            <select
+              className=" w-32 text-black"
+              name="movementMuscleGroup"
+              defaultValue={"None"}
+              onChange={(e) => {
+                const select = e.target as HTMLSelectElement;
+                setCurrentMovementFilter(select.value);
+              }}
+            >
+              <option value="All"></option>
+              <option value="Chest">Chest</option>
+              <option value="Back">Back</option>
+              <option value="Shoulders">Shoulders</option>
+              <option value="Legs">Legs</option>
+              <option value="Arms">Arms</option>
+              <option value="Core">Core</option>
+            </select>
+            <p>{movements.length + " Movements"}</p>
+          </div>
+          <div className=" mt-6 flex h-96 flex-col gap-4 overflow-scroll">
+            {movements.length > 0 ? (
+              movements.map((movement) => {
+                return (
+                  <div
+                    className=" flex flex-col gap-2"
+                    key={`${movement.movementName}_${movement.id}`}
+                  >
+                    <h1 className=" text-xl">{movement.movementName}</h1>
+                    <div className=" flex flex-row gap-2">
+                      {movement.literalMusclesAffected?.map((muscle, i) => {
+                        return (
+                          <p key={`${movement.id}_${muscle}_${i}`}>{muscle}</p>
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
               })
-              // Enable button after getting result
-            }}
+            ) : (
+              <p>No Movements</p>
+            )}
+          </div>
+          <form
+            id="movementGeneratorForm"
+            className=" mt-4 flex flex-row gap-4 text-black"
           >
-            Generate Movements
-          </button>
-        </form>
+            <select
+              className=" w-32"
+              name="movementMuscleGroup"
+              defaultValue={"Chest"}
+            >
+              <option value="Chest">Chest</option>
+              <option value="Back">Back</option>
+              <option value="Shoulders">Shoulders</option>
+              <option value="Legs">Legs</option>
+              <option value="Arms">Arms</option>
+              <option value="Core">Core</option>
+            </select>
+            <input
+              className=" w-12"
+              type="number"
+              defaultValue={1}
+              name="movementGeneratingNumber"
+              placeholder="Count"
+            />
+            <button
+              className=" rounded-sm bg-slate-100 px-2 text-black transition duration-200 hover:bg-slate-300"
+              onClick={(e) => {
+                e.preventDefault();
+                const form = document.getElementById(
+                  "movementGeneratorForm",
+                ) as HTMLFormElement;
+                if (!form) {
+                  console.error("Form not found");
+                  return;
+                }
+                const formData = new FormData(form);
+                const data = Object.fromEntries(formData.entries());
+                const majorBodyPart = (data.movementMuscleGroup ??
+                  "Chest") as string;
+                const numberOfMovements = parseInt(
+                  (data.movementGeneratingNumber as string) ?? "1",
+                );
+
+                generateMovements.mutate({
+                  majorBodyPart: majorBodyPart,
+                  numberOfMovements: numberOfMovements,
+                });
+                // Enable button after getting result
+              }}
+            >
+              Generate Movements
+            </button>
+          </form>
+        </div>
       </div>
     </DashboardLayout>
   );
