@@ -2,6 +2,7 @@ import { env } from '~/env.mjs';
 import OpenAI from 'openai'
 import _ from 'lodash';
 import { Service } from 'typedi';
+import { dumpToFileForDev } from '~/utils/helpers';
 
 
 @Service()
@@ -28,6 +29,8 @@ export class OpenAIService {
         })
 
         const choice = _.first(completion.choices)
+        const content = choice?.message?.content
+        dumpToFileForDev('openai', completion)
         return choice?.message?.content
     }
 }

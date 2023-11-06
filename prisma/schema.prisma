@@ -68,11 +68,11 @@ model VerificationToken {
 model Movement {
     id                                     Int       @id @default(autoincrement())
     categoryName                           String
-    targetMuscleGroup                      String
+    targetMuscleGroups                     String
     movementName                           String
-    catHiit                                Boolean
-    literalMuscledAffected                 String[]
-    literalMusclesAffectedCommonName       String[]
+    canHiit                                Boolean
+    literalMusclesAffected                 String[]
+    literalMusclesAffectedCommonNames      String[]
     averageCaloriesBurntAfterThirtySeconds Int
     Workouts                               Workout[]
 }

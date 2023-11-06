@@ -1,3 +1,3 @@
 {
-    "get15OfMajor": "Give me a JSON response with {0} {1} workouts with the following properties: targetMusleGroups, categoryName, workoutName, canHiit (boolean), literalMusclesAffected, literalMusclesAffectedCommon, averageCaloriesBurntAfterThirtySeconds."
+    "getNMajorMovements": "Only give me a JSON response of an array called \"movements\" with {0} {1} workouts with the following properties: targetMuscleGroups, categoryName, movementName, canHiit (boolean), literalMusclesAffected(array), literalMusclesAffectedCommonNames(array), averageCaloriesBurntAfterThirtySeconds."
 }

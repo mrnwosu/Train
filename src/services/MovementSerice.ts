@@ -1,4 +1,5 @@
 import { type Movement, PrismaClient } from "@prisma/client";
+import _, { create } from "lodash";
 import { Service } from "typedi";
 
 @Service()
@@ -16,9 +17,9 @@ export class MovementService {
     return await this.client.movement.findMany({ where: { categoryName } });
   }
 
-  async getMovementsByMajorBodyPart(targetMuscleGroup: string) {
+  async getMovementsByMajorBodyPart(targetMuscleGroups: string) {
     return await this.client.movement.findMany({
-      where: { targetMuscleGroup },
+      where: { targetMuscleGroups },
     });
   }
 
@@ -27,7 +28,26 @@ export class MovementService {
   }
 
   async createMovements(movements: Movement[]) {
-    return await this.client.movement.createMany({ data: movements });
+    const targetMuscleGroups = _.uniq(_.map(movements, "targetMuscleGroups"));
+
+    const allWorkouts = await this.client.movement.findMany({
+      where: {
+        targetMuscleGroups: {
+          in: targetMuscleGroups,
+        },
+      },
+      select: {
+        movementName: true,
+      },
+    });
+
+    const existingMovements = _.map(allWorkouts, "movementName");
+    const filteredMovements = _.filter(
+      movements,
+      (movement) => !existingMovements.includes(movement.movementName),
+    );
+
+    return await this.client.movement.createMany({ data: filteredMovements });
   }
 
   async updateMovement(id: number, movement: Movement) {
@@ -43,12 +63,12 @@ export class MovementService {
   }
 
   async getHiitWorkouts() {
-    return await this.client.movement.findMany({ where: { catHiit: true } });
+    return await this.client.movement.findMany({ where: { canHiit: true } });
   }
 
   async getMyMuscleAffeected(muscle: string) {
     return await this.client.movement.findMany({
-      where: { literalMuscledAffected: { has: muscle } },
+      where: { literalMusclesAffected: { has: muscle } },
     });
   }
 }

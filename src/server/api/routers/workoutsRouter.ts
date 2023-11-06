@@ -15,7 +15,9 @@ export const workoutRouter = createTRPCRouter({
     return ctx.db.workout.findMany({
       where: {
         creator: {
-          id: creator,
+          id: {
+            equals: creator,
+          },
         },
       },
     });
