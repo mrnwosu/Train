@@ -24,7 +24,7 @@ export function DashboardMenu() {
                 height={60}
                 layout="cover"
                 className=""
-              ></Image>
+              />
             </div>
             <h1 className=" text-xl shadow-red-500 drop-shadow-lg">
               Your Dashboard{" "}
