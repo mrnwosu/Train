@@ -153,10 +153,18 @@ export default function WorkoutCreationComponent() {
             <label className=" text-white" htmlFor="timed-sets">
               Timed Sets?
             </label>
-            <input type="checkbox" name="timed-sets" onChange={(e) => {}} />
+            <input type="checkbox" name="timed-sets" onChange={(e) => {
+              const target = e.target as HTMLInputElement;
+              if(target.checked) {
+                document.getElementById("timedSetsBox")?.classList.remove("opacity-0")
+              }
+              else{
+                document.getElementById("timedSetsBox")?.classList.add("opacity-0")
+              }
+            }} />
           </div>
           {/* Timed Sets */}
-          <div className="flex flex-row justify-between gap-2">
+          <div id="timedSetsBox" className=" opacity-0 flex flex-row justify-between gap-2">
             <input
               type="number"
               name="seconds-between-sets"
