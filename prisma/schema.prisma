@@ -103,3 +103,4 @@ model WorkoutUserMap {
     completed           Boolean
     completedAt         DateTime
 }
+
