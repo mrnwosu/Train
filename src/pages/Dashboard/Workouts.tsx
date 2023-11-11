@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { $Enums } from "@prisma/client";
 import { useEffect, useState } from "react";
-import { WorkoutCreationComponent } from "./WorkoutCreationComponent";
+import WorkoutCreationComponent from "./WorkoutCreationComponent";
 
 export default function Workouts() {
   const [currentMovementFilter, setCurrentMovementFilter] = useState<

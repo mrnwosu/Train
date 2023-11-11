@@ -4,7 +4,7 @@ import { UserSelect } from "../../components/UserSelect";
 import _ from "lodash";
 import { Movement } from "@prisma/client";
 
-export function WorkoutCreationComponent() {
+export default function WorkoutCreationComponent() {
   const [workoutSearch, setWorkoutSearch] = useState<string>("");
   const [currentBodyPart, setCurrentBodyPart] = useState<string>("");
   const [movementsForNewWorkout, setMovementsForNewWorkout] = useState<
