@@ -4,20 +4,46 @@ import { generatorSerivce, movementService } from "~/services/serviceMagik";
 
 export const movementRouter = createTRPCRouter({
   getMovements: publicProcedure
-    .input(z.object({ targetMuscleGroups: z.string().optional() }))
+    .input(
+      z.object({
+        targetMuscleGroups: z.string().optional(),
+        searchQuery: z.string().optional(),
+        onlyHitt: z.boolean().optional(),
+      }),
+    )
     .query(async ({ ctx, input }) => {
-      if (!input.targetMuscleGroups || input.targetMuscleGroups === "All") {
-        return ctx.db.movement.findMany();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const query: any = {};
+
+      if (input.targetMuscleGroups) {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        query.targetMuscleGroups = {
+          contains: input.targetMuscleGroups,
+        };
       }
-      else{
-        return ctx.db.movement.findMany({
-          where: {
-            targetMuscleGroups: {
-              contains: input.targetMuscleGroups,
-            },
-          },
-        });
+
+      if (input.searchQuery) {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        query.movementName = {
+          contains: input.searchQuery,
+          mode: "insensitive",
+        };
       }
+
+      if (input.onlyHitt) {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        query.canHiit = {
+          equals: true,
+        };
+      }
+
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      console.log({ query });
+
+      return ctx.db.movement.findMany({
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        where: query,
+      });
     }),
   generateMovements: publicProcedure
     .input(

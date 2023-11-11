@@ -41,15 +41,17 @@ model Session {
 }
 
 model User {
-    id            String    @id @default(cuid())
-    name          String?
-    email         String?   @unique
-    emailVerified DateTime?
-    image         String?
-    accounts      Account[]
-    sessions      Session[]
-    role          Role      @default(CLIENT)
-    workouts      Workout[]
+    id                  String           @id @default(cuid())
+    name                String?
+    email               String?          @unique
+    emailVerified       DateTime?
+    image               String?
+    accounts            Account[]
+    sessions            Session[]
+    role                Role             @default(CLIENT)
+    workouts            Workout[]
+    AssignedWorkoutMaps WorkoutUserMap[] @relation("trainer")
+    GivenWorkoutMaps    WorkoutUserMap[] @relation("client")
 }
 
 enum Role {
@@ -78,13 +80,26 @@ model Movement {
 }
 
 model Workout {
-    id             Int        @id @default(autoincrement())
-    userId         String
-    workoutName    String
-    movements      Movement[]
-    sets           Int
-    breakSets      Int?
-    breakReps      Int?
-    timeDuringReps Int?
-    creator        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+    id                 Int              @id @default(autoincrement())
+    workoutName        String
+    movements          Movement[]
+    sets               Int
+    secondsBetweenSets Int?
+    secondsDuringReps  Int?
+    creatorUserId      String
+    creator            User             @relation(fields: [creatorUserId], references: [id])
+    WorkoutUserMap     WorkoutUserMap[]
+    notes              String?
+}
+
+model WorkoutUserMap {
+    id                  Int      @id @default(autoincrement())
+    workoutId           Int
+    workout             Workout  @relation(fields: [workoutId], references: [id])
+    assignedByTrainerId String
+    assignedByTrainer   User     @relation("trainer", fields: [assignedByTrainerId], references: [id])
+    clientId            String
+    client              User     @relation("client", fields: [clientId], references: [id])
+    completed           Boolean
+    completedAt         DateTime
 }
