@@ -5,11 +5,8 @@ import _ from "lodash";
 import { isMobile } from "react-device-detect";
 
 export default function Home() {
-
   useEffect(() => {
-    function handleIntersection(
-      entries: IntersectionObserverEntry[],
-    ) {
+    function handleIntersection(entries: IntersectionObserverEntry[]) {
       const viewProgramButton = document.getElementById("viewProgramsButton");
       const firstInfoSection = document.getElementsByClassName("fadeInInfo")[0];
 
@@ -60,7 +57,6 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="relative flex flex-col bg-black font-paytone text-white">
-        
         <div className=" relative h-[38em] overflow-hidden">
           <Image
             src={"/ropes.jpg"}
@@ -90,6 +86,11 @@ export default function Home() {
             <button
               id="viewProgramsButton"
               className=" h-fit w-fit border-2 border-zinc-900 bg-zinc-800 px-8 py-2 text-lg transition duration-500 hover:border-yellow-500 hover:bg-zinc-500"
+              onClick={() => {
+                document
+                  .querySelector(".programs")
+                  ?.scrollIntoView({ behavior: "smooth" });
+              }}
             >
               View Programs
             </button>
@@ -105,84 +106,85 @@ export default function Home() {
         </div>
 
         {/* Online Div */}
-        <section className=" relative bg-gradient-to-r from-[#0E0900] to-black object-fill md:p-4 lg:p-4">
-          <div className="fadeInInfo flex flex-auto flex-col justify-center gap-10 md:flex-row lg:flex-row ">
-            <div className=" flex h-96 flex-col items-center rounded-lg p-1 md:w-1/2 md:p-0 lg:w-1/3 lg:p-0">
-              <h1 className=" mt-6 text-center text-3xl font-bold">Onine</h1>
-              <p className="mt-6 text-center md:w-5/6 md:text-left lg:w-5/6 lg:text-left">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis
-                voluptate, voluptatem, doloremque, quae doloribus voluptatum
-                vero quas voluptas voluptatibus nemo cumque. Quisquam, quae
-                voluptas. Quisquam, quae voluptas.
-              </p>
-              <p className="mt-6 text-center md:w-5/6 md:text-left lg:w-5/6 lg:text-left">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis
-                voluptate, voluptatem, doloremque, quae doloribus voluptatum
-                vero quas voluptas voluptatibus nemo cumque. Quisquam, quae
-                voluptas. Quisquam, quae voluptas.
-              </p>
-            </div>
-            <div className=" relative h-24 overflow-hidden rounded-lg md:h-96 md:w-1/2 lg:h-96 lg:w-1/3">
-              <Image
-                src={"/online.jpg"}
-                alt="Online Training"
-                objectFit="cover"
-                layout="fill"
-                className="
+        <div className=" programs">
+          <section className=" relative bg-gradient-to-r from-[#0E0900] to-black object-fill md:p-4 lg:p-4">
+            <div className="fadeInInfo flex flex-auto flex-col justify-center gap-10 md:flex-row lg:flex-row ">
+              <div className=" flex h-96 flex-col items-center rounded-lg p-1 md:w-1/2 md:p-0 lg:w-1/3 lg:p-0">
+                <h1 className=" mt-6 text-center text-3xl font-bold">Onine</h1>
+                <p className="mt-6 text-center md:w-5/6 md:text-left lg:w-5/6 lg:text-left">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis
+                  voluptate, voluptatem, doloremque, quae doloribus voluptatum
+                  vero quas voluptas voluptatibus nemo cumque. Quisquam, quae
+                  voluptas. Quisquam, quae voluptas.
+                </p>
+                <p className="mt-6 text-center md:w-5/6 md:text-left lg:w-5/6 lg:text-left">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis
+                  voluptate, voluptatem, doloremque, quae doloribus voluptatum
+                  vero quas voluptas voluptatibus nemo cumque. Quisquam, quae
+                  voluptas. Quisquam, quae voluptas.
+                </p>
+              </div>
+              <div className=" relative h-24 overflow-hidden rounded-lg md:h-96 md:w-1/2 lg:h-96 lg:w-1/3">
+                <Image
+                  src={"/online.jpg"}
+                  alt="Online Training"
+                  objectFit="cover"
+                  layout="fill"
+                  className="
                 scale-110 opacity-40 transition duration-300 ease-in hover:scale-100 hover:opacity-100"
-              />
+                />
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        {/* In Person Div */}
-        <section className=" relative bg-gradient-to-r from-black to-zinc-900 md:p-10 lg:p-10">
-          <div className="fadeInInfo flex flex-auto flex-col justify-center gap-10 md:flex-row lg:flex-row">
-            {!isMobile ? (
-              <div className=" relative h-24 overflow-hidden rounded-lg bg-black md:h-96 md:w-1/2 lg:h-96 lg:w-1/3">
-                <Image
-                  src={"/deadlift.jpg"}
-                  alt="Online Training"
-                  objectFit="cover"
-                  layout="fill"
-                  className="
+          {/* In Person Div */}
+          <section className=" relative bg-gradient-to-r from-black to-zinc-900 md:p-10 lg:p-10">
+            <div className="fadeInInfo flex flex-auto flex-col justify-center gap-10 md:flex-row lg:flex-row">
+              {!isMobile ? (
+                <div className=" relative h-24 overflow-hidden rounded-lg bg-black md:h-96 md:w-1/2 lg:h-96 lg:w-1/3">
+                  <Image
+                    src={"/deadlift.jpg"}
+                    alt="Online Training"
+                    objectFit="cover"
+                    layout="fill"
+                    className="
                 scale-110 opacity-40 grayscale transition duration-300 ease-in hover:scale-100 hover:opacity-100 hover:grayscale-0"
-                />
+                  />
+                </div>
+              ) : null}
+              <div className=" flex h-96 flex-col items-center rounded-lg p-1 md:w-1/2 md:p-0 lg:w-1/3 lg:p-0">
+                <h1 className=" mt-6 text-center text-3xl font-bold">
+                  In person
+                </h1>
+                <p className="mt-6 text-center md:w-5/6 md:text-left lg:w-5/6 lg:text-left">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis
+                  voluptate, voluptatem, doloremque, quae doloribus voluptatum
+                  vero quas voluptas voluptatibus nemo cumque. Quisquam, quae
+                  voluptas. Quisquam, quae voluptas.
+                </p>
+                <p className="mt-6 text-center md:w-5/6 md:text-left lg:w-5/6 lg:text-left">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis
+                  voluptate, voluptatem, doloremque, quae doloribus voluptatum
+                  vero quas voluptas voluptatibus nemo cumque. Quisquam, quae
+                  voluptas. Quisquam, quae voluptas.
+                </p>
               </div>
-            ) : null}
-            <div className=" flex h-96 flex-col items-center rounded-lg p-1 md:w-1/2 md:p-0 lg:w-1/3 lg:p-0">
-              <h1 className=" mt-6 text-center text-3xl font-bold">
-                In person
-              </h1>
-              <p className="mt-6 text-center md:w-5/6 md:text-left lg:w-5/6 lg:text-left">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis
-                voluptate, voluptatem, doloremque, quae doloribus voluptatum
-                vero quas voluptas voluptatibus nemo cumque. Quisquam, quae
-                voluptas. Quisquam, quae voluptas.
-              </p>
-              <p className="mt-6 text-center md:w-5/6 md:text-left lg:w-5/6 lg:text-left">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis
-                voluptate, voluptatem, doloremque, quae doloribus voluptatum
-                vero quas voluptas voluptatibus nemo cumque. Quisquam, quae
-                voluptas. Quisquam, quae voluptas.
-              </p>
-            </div>
-            {/* Bad Workaround  */}
-            {isMobile ? (    
-              <div className=" relative h-24 overflow-hidden rounded-lg bg-black md:h-96 md:w-1/2 lg:h-96 lg:w-1/3">
-                <Image
-                  src={"/deadlift.jpg"}
-                  alt="Online Training"
-                  objectFit="cover"
-                  layout="fill"
-                  className="
+              {/* Bad Workaround  */}
+              {isMobile ? (
+                <div className=" relative h-24 overflow-hidden rounded-lg bg-black md:h-96 md:w-1/2 lg:h-96 lg:w-1/3">
+                  <Image
+                    src={"/deadlift.jpg"}
+                    alt="Online Training"
+                    objectFit="cover"
+                    layout="fill"
+                    className="
   scale-110 opacity-40 grayscale transition duration-300 ease-in hover:scale-100 hover:opacity-100 hover:grayscale-0"
-                />
-              </div>
-            ) : null}
-          </div>
-        </section>
-
+                  />
+                </div>
+              ) : null}
+            </div>
+          </section>
+        </div>
         <footer className=" flex h-1/5 flex-row justify-end gap-4 bg-zinc-900 p-4">
           <a className=" transition hover:scale-[1.02] hover:text-yellow-200">
             Contact Me
