@@ -3,8 +3,8 @@ import DashboardLayout from "./DashboardLayout";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { $Enums } from "@prisma/client";
-import { useState } from "react";
-import { UserSelect } from "../../components/UserSelect";
+import { useEffect, useState } from "react";
+import { WorkoutCreationComponent } from "./WorkoutCreationComponent";
 
 export default function Workouts() {
   const [currentMovementFilter, setCurrentMovementFilter] = useState<
@@ -130,17 +130,11 @@ export default function Workouts() {
             </form>
           </div>
           <div className=" flex w-[36em] flex-col gap-2 rounded-lg border-2 border-zinc-800 p-4">
-            <h1>Something</h1>
-            <UserSelect
-              onSelect={(userId) => {
-                console.log({ userId });
-              }}
-            />
+            <h1>Workout Creation</h1>
+            <WorkoutCreationComponent />
           </div>
         </div>
       </div>
     </DashboardLayout>
   );
 }
-
-
