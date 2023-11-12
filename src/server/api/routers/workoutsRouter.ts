@@ -4,11 +4,11 @@ import { z } from "zod";
 import {
   createTRPCRouter,
   protectedProcedure,
-  publicProcedure,
+  trainerOnlyProcedur as trainerOnlyProcedure,
 } from "~/server/api/trpc";
 
 export const workoutRouter = createTRPCRouter({
-  getWorkouts: publicProcedure.query(async ({ ctx }) => {
+  getWorkouts: protectedProcedure.query(async ({ ctx }) => {
     const creator = ctx.session?.user.id;
     if (!creator) {
       return [];
@@ -23,7 +23,7 @@ export const workoutRouter = createTRPCRouter({
       },
     });
   }),
-  createWorkout: publicProcedure
+  createWorkout: trainerOnlyProcedure
     .input(
       z.object({
         workoutName: z.string(),

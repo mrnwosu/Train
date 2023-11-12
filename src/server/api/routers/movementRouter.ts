@@ -1,9 +1,9 @@
 import { z } from "zod";
-import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import { createTRPCRouter, protectedProcedure, publicProcedure, trainerOnlyProcedur } from "~/server/api/trpc";
 import { generatorSerivce, movementService } from "~/services/serviceMagik";
 
 export const movementRouter = createTRPCRouter({
-  getMovements: publicProcedure
+  getMovements: protectedProcedure
     .input(
       z.object({
         targetMuscleGroups: z.string().optional(),
@@ -45,7 +45,7 @@ export const movementRouter = createTRPCRouter({
         where: query,
       });
     }),
-  generateMovements: publicProcedure
+  generateMovements: trainerOnlyProcedur
     .input(
       z.object({ majorBodyPart: z.string(), numberOfMovements: z.number() }),
     )
@@ -58,7 +58,7 @@ export const movementRouter = createTRPCRouter({
       console.log("result in routers", { result });
       await movementService.createMovements(result);
     }),
-  createMovements: publicProcedure
+  createMovements: trainerOnlyProcedur
     .input(
       z.object({
         movements: z.array(
