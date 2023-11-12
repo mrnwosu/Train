@@ -37,6 +37,9 @@ export function DashboardMenu() {
               <Link href={"/Dashboard/Workouts"}>
                 <li className="           hover:bg-zinc-700">Workouts</li>
               </Link>
+              <Link href={"/Dashboard/Assignments"}>
+                <li className="           hover:bg-zinc-700">Assignments</li>
+              </Link>
               <li className="           hover:bg-zinc-700">Progress</li>
               <li className="           hover:bg-zinc-700">Settings</li>
             </ul>

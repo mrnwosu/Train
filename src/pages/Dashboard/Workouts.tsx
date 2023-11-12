@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { $Enums } from "@prisma/client";
 import { useEffect, useState } from "react";
-import WorkoutCreationComponent from "./WorkoutCreationComponent";
+import WorkoutCreationComponent from "../../components/WorkoutCreationComponent";
 
 export default function Workouts() {
   const [currentMovementFilter, setCurrentMovementFilter] = useState<
@@ -14,7 +14,7 @@ export default function Workouts() {
   const movementData = api.movement.getMovements.useQuery({
     targetMuscleGroups: currentMovementFilter,
   });
-  
+
   const movements = movementData.data ?? [];
   const { data: sessionData } = useSession();
   const user = api.user.getUser.useQuery({ id: sessionData?.user?.id ?? "" });
@@ -27,11 +27,11 @@ export default function Workouts() {
     <DashboardLayout>
       <div className=" flex w-full flex-col gap-2  text-white">
         {isTrainer && <h1 className=" text-2xl">Workout & Movement Page</h1>}
-        <div className="flex flex-row justify-between">
-          <div className=" flex flex-col gap-2 rounded-lg border-2 border-zinc-800 p-4">
+        <div className="flex flex-row  justify-between">
+          <div className=" flex flex-col w-auto gap-2 rounded-lg border-2 border-zinc-800 p-4">
             <div className=" flex flex-grow flex-row justify-between">
               <select
-                className=" w-32 text-black"
+                className=" text-black"
                 name="movementMuscleGroup"
                 defaultValue={"None"}
                 onChange={(e) => {

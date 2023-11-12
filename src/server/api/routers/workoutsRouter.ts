@@ -65,4 +65,42 @@ export const workoutRouter = createTRPCRouter({
         });
       }
     }),
+  getCurrentAssignments: trainerOnlyProcedure
+    .input(
+      z.object({
+        clientId: z.string().optional(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      const creatorId = ctx.session?.user.id;
+
+      if (input.clientId) {
+        return ctx.db.workoutUserMap.findMany({
+          where: {
+            clientId: {
+              equals: input.clientId,
+            },
+            assignedByTrainerId: {
+              equals: creatorId,
+            },
+          },
+          include: {
+            workout: true,
+            client: true,
+          },
+        });
+      }
+
+      return ctx.db.workoutUserMap.findMany({
+        where: {
+          assignedByTrainerId: {
+            equals: creatorId,
+          },
+        },
+        include: {
+          workout: true,
+          client: true,
+        },
+      });
+    }),
 });
