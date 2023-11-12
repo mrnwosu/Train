@@ -14,9 +14,7 @@ export default function Workouts() {
   const movementData = api.movement.getMovements.useQuery({
     targetMuscleGroups: currentMovementFilter,
   });
-  const workoutData = api.workout.getWorkouts.useQuery();
-
-  const workouts = workoutData.data ?? [];
+  
   const movements = movementData.data ?? [];
   const { data: sessionData } = useSession();
   const user = api.user.getUser.useQuery({ id: sessionData?.user?.id ?? "" });

@@ -133,7 +133,7 @@ const enforceUserIsTrainer = t.middleware(async ({ ctx, next }) => {
   });
 
   if(!user ||  user?.role !==  `${$Enums.Role.TRAINER}`){
-    throw new TRPCError({ code: "UNAUTHORIZED" });
+    throw new TRPCError({ code: "UNAUTHORIZED", message: "User is not trainer." });
   }
 
   return next({
