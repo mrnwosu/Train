@@ -31,6 +31,9 @@ export default function WorkoutCreationComponent() {
   const { mutate: createWorkoutMutation } =
     api.workout.createWorkout.useMutation();
 
+  const { mutate: deleteWorkoutMutation } =
+    api.workout.deleteWorkout.useMutation();
+
   const bodyParts = [
     "All",
     ...(_.uniqBy(allMovements.data, "targetMuscleGroups").map(
@@ -72,8 +75,22 @@ export default function WorkoutCreationComponent() {
       ) : (
         workouts.data.map((workout) => {
           return (
-            <div className=" text-yellow-100" key={workout.id}>
+            <div
+              className=" flex w-5/6 flex-row justify-between text-yellow-100"
+              key={workout.id}
+            >
               <p>{workout.workoutName}</p>
+              <i
+                data-workoutId={workout.id}
+                onClick={(e) => {
+                  const target = e.target as HTMLInputElement;
+                  const workoutId = Number(target.dataset.workoutId);
+                  console.log("Deleting workout", { workoutId });
+                  deleteWorkoutMutation({ workoutId });
+                }}
+              >
+                X
+              </i>
             </div>
           );
         })

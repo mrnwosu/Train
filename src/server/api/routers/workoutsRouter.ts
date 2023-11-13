@@ -21,6 +21,9 @@ export const workoutRouter = createTRPCRouter({
           },
         },
       },
+      include: {
+        movements: true,
+      },
     });
   }),
   createWorkout: trainerOnlyProcedure
@@ -103,4 +106,16 @@ export const workoutRouter = createTRPCRouter({
         },
       });
     }),
+    deleteWorkout: trainerOnlyProcedure
+    .input(
+      z.object({
+        workoutId: z.number(),
+      }))
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.db.workout.delete({
+        where: {
+          id: input.workoutId,
+        },
+      });
+    })
 });

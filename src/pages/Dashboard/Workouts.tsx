@@ -28,7 +28,7 @@ export default function Workouts() {
       <div className=" flex w-full flex-col gap-2  text-white">
         {isTrainer && <h1 className=" text-2xl">Workout & Movement Page</h1>}
         <div className="flex flex-row  justify-between">
-          <div className=" flex flex-col w-auto gap-2 rounded-lg border-2 border-zinc-800 p-4">
+          <div className=" flex w-auto flex-col gap-2 rounded-lg border-2 border-zinc-800 p-4">
             <div className=" flex flex-grow flex-row justify-between">
               <select
                 className=" text-black"

@@ -12,7 +12,19 @@ export const userRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       return ctx.db.user.findFirst({ where: { id: input.id } });
     }),
-  getUsers: protectedProcedure.query(async ({ ctx }) => {
+  getUsers: protectedProcedure
+  .input(z.object({ role: z.enum(["TRAINER", "CLIENT"]).optional() }))
+  .query(async ({ input, ctx }) => {
+
+    if(input.role){
+      const result = await ctx.db.user.findMany({
+        where: {
+          role: input.role
+        }
+      });
+      return result;
+    }
+
     const result = await ctx.db.user.findMany();
     console.log({result})
     return _.filter(result, (u) => u.id !== ctx.session?.user.id);
