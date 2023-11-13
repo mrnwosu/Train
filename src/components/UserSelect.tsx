@@ -5,7 +5,7 @@ export function UserSelect({
 }: {
   onSelect: (userId: string) => void;
 }) {
-  const userData = api.user.getUsers.useQuery();
+  const userData = api.user.getUsers.useQuery({});
   const users = userData.data ?? [];
 
   return (
