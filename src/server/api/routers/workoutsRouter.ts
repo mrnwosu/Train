@@ -106,16 +106,38 @@ export const workoutRouter = createTRPCRouter({
         },
       });
     }),
-    deleteWorkout: trainerOnlyProcedure
+  createWorkoutAssignment: trainerOnlyProcedure
+    .input(
+      z.object({
+        clientId: z.string(),
+        workoutId: z.number(),
+        dayOfWeek: z.number(),
+        notes: z.string().optional(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const creatorId = ctx.session?.user.id;
+      return ctx.db.workoutUserMap.create({
+        data: {
+          clientId: input.clientId,
+          workoutId: input.workoutId,
+          assignedByTrainerId: creatorId,
+          notes: input.notes,
+          dayOfWeek: input.dayOfWeek,
+        },
+      });
+    }),
+  deleteWorkout: trainerOnlyProcedure
     .input(
       z.object({
         workoutId: z.number(),
-      }))
+      }),
+    )
     .mutation(async ({ ctx, input }) => {
       return await ctx.db.workout.delete({
         where: {
           id: input.workoutId,
         },
       });
-    })
+    }),
 });

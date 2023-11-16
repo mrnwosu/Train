@@ -15,7 +15,7 @@ export const movementRouter = createTRPCRouter({
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const query: any = {};
 
-      if (input.targetMuscleGroups) {
+      if (input.targetMuscleGroups && input.targetMuscleGroups !== "All") {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         query.targetMuscleGroups = {
           contains: input.targetMuscleGroups,

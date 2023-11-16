@@ -3,6 +3,7 @@ import { useState } from "react";
 import _, { create } from "lodash";
 import { type Movement } from "@prisma/client";
 import { ApiError } from "next/dist/server/api-utils";
+import { isConstructorDeclaration } from "typescript";
 
 export default function WorkoutCreationComponent() {
   const [movementSearch, setMovementSearch] = useState<string>("");
@@ -34,6 +35,13 @@ export default function WorkoutCreationComponent() {
   const { mutate: deleteWorkoutMutation } =
     api.workout.deleteWorkout.useMutation();
 
+  console.log({
+    data: allMovements.data,
+    uniq: _.uniqBy(allMovements.data, "targetMuscleGroups"),
+    anotherOne: _.uniqBy(allMovements.data, "targetMuscleGroups").map(
+      (m) => m.targetMuscleGroups,
+    )
+  })
   const bodyParts = [
     "All",
     ...(_.uniqBy(allMovements.data, "targetMuscleGroups").map(
@@ -124,7 +132,7 @@ export default function WorkoutCreationComponent() {
                 onChange={(e) => setMovementSearch(e.target.value)}
                 value={movementSearch}
               />
-              <label htmlFor="hiit-only">HIIT Only</label>
+              <label className=" text-white" htmlFor="hiit-only">HIIT Only</label>
               <input
                 type="checkbox"
                 name="hiit-only"

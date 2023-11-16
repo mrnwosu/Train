@@ -100,9 +100,7 @@ model WorkoutUserMap {
     assignedByTrainer   User     @relation("trainer", fields: [assignedByTrainerId], references: [id])
     clientId            String
     client              User     @relation("client", fields: [clientId], references: [id])
-    completed           Boolean
-    completedAt         DateTime
     notes               String?
-    dayOfWeek           String
+    dayOfWeek           Int
 }
 
