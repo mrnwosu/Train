@@ -1,10 +1,10 @@
 import { api } from "~/utils/api";
 import DashboardLayout from "./DashboardLayout";
-import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { $Enums } from "@prisma/client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import WorkoutCreationComponent from "../../components/WorkoutCreationComponent";
+import { MovementSummaryComponent } from "../../components/MovementSummaryComponent";
 
 export default function Workouts() {
   const [currentMovementFilter, setCurrentMovementFilter] = useState<
@@ -49,25 +49,14 @@ export default function Workouts() {
               </select>
               <p>{movements.length + " Movements"}</p>
             </div>
-            <div className=" mt-6 flex h-96 flex-col gap-4 overflow-scroll">
+            <div className=" mt-6 flex h-96 flex-col gap-1 overflow-scroll">
               {movements.length > 0 ? (
                 movements.map((movement) => {
                   return (
-                    <div
-                      className=" flex flex-col gap-2"
+                    <MovementSummaryComponent
                       key={`${movement.movementName}_${movement.id}`}
-                    >
-                      <h1 className=" text-xl">{movement.movementName}</h1>
-                      <div className=" flex flex-row gap-2">
-                        {movement.literalMusclesAffected?.map((muscle, i) => {
-                          return (
-                            <p key={`${movement.id}_${muscle}_${i}`}>
-                              {muscle}
-                            </p>
-                          );
-                        })}
-                      </div>
-                    </div>
+                      movement={movement}
+                    />
                   );
                 })
               ) : (
@@ -136,3 +125,5 @@ export default function Workouts() {
     </DashboardLayout>
   );
 }
+
+

@@ -88,7 +88,11 @@ export const workoutRouter = createTRPCRouter({
             },
           },
           include: {
-            workout: true,
+            workout: {
+              include: {
+                movements: true,
+              },
+            },
             client: true,
           },
         });

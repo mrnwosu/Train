@@ -1,8 +1,15 @@
 import { api } from "~/utils/api";
 import DashboardLayout from "./DashboardLayout";
-import { $Enums, type Movement, type Workout } from "@prisma/client";
+import {
+  $Enums,
+  User,
+  type Movement,
+  type Workout,
+  WorkoutUserMap,
+} from "@prisma/client";
 import { useRef } from "react";
 import { returnDayOfWeek } from "~/utils/uiHelper";
+import _ from "lodash";
 
 export default function Assignments() {
   type NewAssignment = {
@@ -73,29 +80,61 @@ export default function Assignments() {
   };
 
   const currentAssignments = api.workout.getCurrentAssignments.useQuery({});
+  const workouts = api.workout.getWorkouts.useQuery();
+  const clients = api.user.getUsers.useQuery({
+    role: $Enums.Role.CLIENT,
+  });
+
   const createNewAssignmentMutation =
     api.workout.createWorkoutAssignment.useMutation();
-  const workouts = api.workout.getWorkouts.useQuery();
+
   const hasAssignments =
     currentAssignments &&
     currentAssignments.data &&
     currentAssignments.data?.length > 0;
+  const vms: {
+    client: User | undefined;
+    assignmentList: {
+      id: number | undefined;
+      workout: Workout | undefined;
+      dayOfWeek: string | undefined;
+      notes: string | null;
+    }[];
+  }[] = [];
 
-  const currentAssignmentViewModels = currentAssignments.data?.map(
-    (assignment) => {
-      return {
-        id: assignment.id,
-        workoutName: assignment.workout.workoutName,
-        clientName: assignment.client.name,
-        dayOfWeek: returnDayOfWeek(assignment.dayOfWeek)?.toLocaleDateString( "en-US", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),
-        notes: assignment.notes,
-      };
+  const assignmentsByClient = _.groupBy(currentAssignments.data, "clientId");
+  Object.keys(assignmentsByClient).forEach((clientId) => {
+    debugger
+    if (
+      !clientId ||
+      !assignmentsByClient?.[clientId] ||
+      assignmentsByClient[clientId]?.length === 0 ||
+      !assignmentsByClient[clientId]?.[0]?.client?.name
+    ) {
+      return;
     }
-  );
 
-  const clients = api.user.getUsers.useQuery({
-    role: $Enums.Role.CLIENT,
+    const client = assignmentsByClient[clientId]?.[0]?.client;
+    const assginmentList = assignmentsByClient[clientId];
+
+    vms.push({
+      client,
+      assignmentList:
+        assginmentList?.map((assignment) => {
+          return {
+            workout: assignment.workout,
+            dayOfWeek: returnDayOfWeek(
+              assignment.dayOfWeek,
+            ).toLocaleDateString(),
+            id: assignment.id,
+            notes: assignment.notes,
+          };
+        }) ?? [],
+    });
   });
+
+  console.log({vms, assignmentsByClient})
+
   console.log({ currentAssignments, hasAssignments });
 
   return (
@@ -109,23 +148,13 @@ export default function Assignments() {
           <div className=" mb-2 mt-1 h-1 bg-red-600"></div>
           {hasAssignments && (
             <div>
-              {currentAssignmentViewModels?.map((assignment) => {
+              {vms.map((vm) => {
                 return (
-                  <div key={assignment.id} className=" flex flex-col gap-2 bg-zinc-700 rounded-md border-2 border-zinc-800">
-                    <p className="px-2">{assignment.clientName}</p>
-                    <p className=" bg-black px-2 pb-1">{assignment.workoutName}</p>
-                    {assignment.notes && (
-                      <div className=" overflow-scroll rounded bg-zinc-800 p-4 text-white">
-                        <p className=" text-white">{assignment.notes}</p>
-                      </div>
-                    )}
-                    {assignment.dayOfWeek && (
-                      <div className=" flex flex-row gap-2">
-                        <p className=" px-2">Next Workout: </p>
-                        <p className=" px-2">{assignment.dayOfWeek}</p>
-                      </div>
-                    )}
-                  </div>
+                  <AssignmentsForClientComponenet
+                    key={`client_${vm.client?.id}`}
+                    client={vm.client}
+                    assignments={vm.assignmentList}
+                  />
                 );
               })}
             </div>
@@ -241,29 +270,35 @@ export default function Assignments() {
   );
 }
 
-export function WorkoutComponent({
-  workout,
-  movements,
-}: {
-  workout: Workout;
-  movements: Movement[];
-}) {
+export const AssignmentsForClientComponenet = (props: {
+  client: User | undefined;
+  assignments: {
+    workout: Workout | undefined;
+    dayOfWeek: string | undefined;
+    id: number | undefined;
+    notes: string | null;
+  }[];
+}) => {
+  if (!props?.assignments || props.assignments.length === 0) return <div></div>;
+  const { client, assignments } = props;
   return (
-    <div className=" bg-zinc-900">
-      <h1 className=" border-b-2 border-yellow-800 px-2 text-lg text-yellow-100 ">
-        {workout.workoutName}
-      </h1>
-      <div className="transition  [&>div:nth-child(even)]:bg-zinc-800 [&>div:nth-child(odd)]:bg-zinc-700">
-        <div className="">
-          {movements.map((movement) => {
-            return (
-              <div className="  " key={movement.id}>
-                <p>{movement.movementName}</p>
+    <div className=" flex flex-col gap-2 rounded-md border-2 border-zinc-800 bg-zinc-700">
+      <p className="px-2">{client?.name}</p>
+      {assignments.map((assignment) => {
+        return (
+          <div key={`assignment_${assignment.id}`}>
+            <p className=" bg-black px-2 pb-1">
+              {assignment.workout?.workoutName}
+            </p>
+            <p>Next Workout: {assignment.dayOfWeek}</p>
+            {assignment.notes && (
+              <div className=" overflow-scroll rounded bg-zinc-800 p-4 text-white">
+                <p className=" text-white">{assignment.notes}</p>
               </div>
-            );
-          })}
-        </div>
-      </div>
+            )}
+          </div>
+        );
+      })}
     </div>
   );
-}
+};
