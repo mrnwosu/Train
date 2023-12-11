@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { UserActions } from "~/components/UserActions";
+import { UserActions } from "~/components/Layout/UserActions";
 
 export default function AppLayout({ children }) {
   const [shouldLoadHeader, setShouldLoadHeader] = useState(false)

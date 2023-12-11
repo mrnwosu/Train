@@ -1,12 +1,9 @@
-import { DashboardMenu } from "~/components/DasbhoardMenu";
-import { DashboardCell } from "~/components/DashboardCell";
+import { DashboardCell } from "~/components/Dasbhoard/DashboardCell";
 import DashboardLayout from "./DashboardLayout";
 import { useSession } from "next-auth/react";
 
 export default function Dashboard() {
-  const { data } = useSession();
-
-    //add guards.
+    //TODO add guards.
 
   return (
     <DashboardLayout>

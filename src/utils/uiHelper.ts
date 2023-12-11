@@ -46,3 +46,13 @@ export function toggleClassForFirstClass(className: string, addClass: string | n
         }
     }
 }
+
+export function toggleClassForElement(element : HTMLElement, addClass: string | null, removeClass: string | null){
+    if(addClass){
+        element.classList.add(addClass);
+    }
+
+    if(removeClass){
+        element.classList.remove(removeClass);
+    }
+}

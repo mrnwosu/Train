@@ -1,15 +1,14 @@
 import { api } from "~/utils/api";
 import DashboardLayout from "./DashboardLayout";
-import {
-  $Enums,
-  User,
-  type Movement,
-  type Workout,
-  WorkoutUserMap,
-} from "@prisma/client";
+import { $Enums, type User, type Workout } from "@prisma/client";
 import { useRef } from "react";
-import { returnDayOfWeek } from "~/utils/uiHelper";
+import {
+  returnDayOfWeek,
+  toggleClassForAllElementsByClass,
+  toggleClassForElement,
+} from "~/utils/uiHelper";
 import _ from "lodash";
+import { AssignmentsForClientComponent } from "../../components/Workouts/AssignmentsForClientComponent";
 
 export default function Assignments() {
   type NewAssignment = {
@@ -104,7 +103,6 @@ export default function Assignments() {
 
   const assignmentsByClient = _.groupBy(currentAssignments.data, "clientId");
   Object.keys(assignmentsByClient).forEach((clientId) => {
-    debugger
     if (
       !clientId ||
       !assignmentsByClient?.[clientId] ||
@@ -121,11 +119,15 @@ export default function Assignments() {
       client,
       assignmentList:
         assginmentList?.map((assignment) => {
+          const date = returnDayOfWeek(assignment.dayOfWeek);
+          const formattedDate = date.toLocaleString(
+            'en-US',
+            { weekday: 'long', month: 'numeric', day: 'numeric', year: 'numeric' }
+          );
+
           return {
             workout: assignment.workout,
-            dayOfWeek: returnDayOfWeek(
-              assignment.dayOfWeek,
-            ).toLocaleDateString(),
+            dayOfWeek: formattedDate,
             id: assignment.id,
             notes: assignment.notes,
           };
@@ -133,13 +135,13 @@ export default function Assignments() {
     });
   });
 
-  console.log({vms, assignmentsByClient})
+  console.log({ vms, assignmentsByClient });
 
   console.log({ currentAssignments, hasAssignments });
 
   return (
     <DashboardLayout>
-      <div className=" flex flex-col">
+      <div className=" flex flex-row gap-4">
         <div>
           {!hasAssignments && (
             <p className=" text-xl">No Current Assignments</p>
@@ -147,10 +149,10 @@ export default function Assignments() {
           {hasAssignments && <p className=" text-xl">Current Assignments</p>}
           <div className=" mb-2 mt-1 h-1 bg-red-600"></div>
           {hasAssignments && (
-            <div>
+            <div className=" flex flex-col gap-2">
               {vms.map((vm) => {
                 return (
-                  <AssignmentsForClientComponenet
+                  <AssignmentsForClientComponent
                     key={`client_${vm.client?.id}`}
                     client={vm.client}
                     assignments={vm.assignmentList}
@@ -162,7 +164,7 @@ export default function Assignments() {
         </div>
         <div>
           <div>
-            <h1 className=" mt-10 text-xl">Assign Workouts</h1>
+            <h1 className=" text-xl">Assign Workouts</h1>
             <div className=" mb-2 mt-1 h-1 bg-red-600"></div>
             <form className="flex flex-col gap-2">
               <select
@@ -185,15 +187,17 @@ export default function Assignments() {
                   return (
                     <div
                       onClick={(e) => {
-                        e.preventDefault();
-                        const allDays = document.querySelectorAll(".dayOfWeek");
-                        allDays.forEach((day) => {
-                          day.classList.remove("bg-yellow-900");
-                        });
-
+                        toggleClassForAllElementsByClass(
+                          "dayOfWeek",
+                          "bg-zinc-700",
+                          "bg-yellow-900",
+                        );
                         const thisElement = e.target as HTMLDivElement;
-                        thisElement.classList.add("bg-yellow-900");
-
+                        toggleClassForElement(
+                          thisElement,
+                          "bg-yellow-900",
+                          "bg-zinc-700",
+                        );
                         assignDay(i);
                       }}
                       data-day_of_week={i}
@@ -205,7 +209,6 @@ export default function Assignments() {
                   );
                 })}
               </div>
-
               <select
                 name="client-name"
                 className=" text-black"
@@ -241,10 +244,11 @@ export default function Assignments() {
                   className=" w-fit rounded border-2 border-yellow-950 p-2 text-white"
                   onClick={(e) => {
                     e.preventDefault();
-                    const allDays = document.querySelectorAll(".dayOfWeek");
-                    allDays.forEach((day) => {
-                      day.classList.remove("bg-yellow-900");
-                    });
+                    toggleClassForAllElementsByClass(
+                      "dayOfWeek",
+                      "bg-yellow-900",
+                      "bg-zinc-700",
+                    );
                     resetAssignment();
                   }}
                 >
@@ -269,36 +273,3 @@ export default function Assignments() {
     </DashboardLayout>
   );
 }
-
-export const AssignmentsForClientComponenet = (props: {
-  client: User | undefined;
-  assignments: {
-    workout: Workout | undefined;
-    dayOfWeek: string | undefined;
-    id: number | undefined;
-    notes: string | null;
-  }[];
-}) => {
-  if (!props?.assignments || props.assignments.length === 0) return <div></div>;
-  const { client, assignments } = props;
-  return (
-    <div className=" flex flex-col gap-2 rounded-md border-2 border-zinc-800 bg-zinc-700">
-      <p className="px-2">{client?.name}</p>
-      {assignments.map((assignment) => {
-        return (
-          <div key={`assignment_${assignment.id}`}>
-            <p className=" bg-black px-2 pb-1">
-              {assignment.workout?.workoutName}
-            </p>
-            <p>Next Workout: {assignment.dayOfWeek}</p>
-            {assignment.notes && (
-              <div className=" overflow-scroll rounded bg-zinc-800 p-4 text-white">
-                <p className=" text-white">{assignment.notes}</p>
-              </div>
-            )}
-          </div>
-        );
-      })}
-    </div>
-  );
-};
