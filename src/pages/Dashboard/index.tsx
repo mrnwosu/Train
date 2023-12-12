@@ -1,24 +1,22 @@
 import { DashboardCell } from "~/components/Dasbhoard/DashboardCell";
 import DashboardLayout from "./DashboardLayout";
-import { useSession } from "next-auth/react";
 
 export default function Dashboard() {
-    //TODO add guards.
+  
 
   return (
     <DashboardLayout>
-      <DashboardCell
-        title="Upcoming Workouts"
-        description="This is A Description"
-      >
-        <div>random</div>
-      </DashboardCell>
-      <DashboardCell
-        title="This weeks goals"
-        description="This is A Description"
-      >
-        <div>random</div>
-      </DashboardCell>
+      <div className=" grid grid-rows-2 grid-cols-3 gap-4 p-4">
+        <DashboardCell title="Upcoming Workouts" description="This is A Description">
+          <div>random</div>
+        </DashboardCell>
+        <DashboardCell title="Upcoming Workouts" description="This is A Description">
+          <div>random</div>
+        </DashboardCell>
+        <DashboardCell title="Upcoming Workouts" description="This is A Description">
+          <div>random</div>
+        </DashboardCell>
+      </div>
     </DashboardLayout>
   );
 }

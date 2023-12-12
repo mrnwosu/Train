@@ -1,3 +1,4 @@
+import { $Enums } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,43 +10,62 @@ export function DashboardMenu() {
     id: sessionData?.user?.id ?? "",
   });
 
+  const user = api.user.getUser.useQuery({ id: sessionData?.user?.id ?? "" });
+  const isTrainer = user?.data?.role === $Enums.Role.TRAINER;
+
   return (
-    <div>
+    <div className="w-32 bg-yellow-950/50 text-center">
       {isLoading ? (
         <p>Loading...</p>
       ) : (
-        <div className="relative top-3 flex flex-col items-center gap-1 [&>div]:rounded-lg">
-          <div className=" flex flex-row items-center gap-2 ">
+        <div className="relative top-3 flex flex-col items-center gap-4 [&>div]:rounded-lg">
+          <div className=" flex w-28 flex-col items-center gap-2 border-2 border-yellow-950/50 bg-yellow-950/50 p-2">
             <div className=" overflow-hidden rounded-full border-4 border-green-800">
-              <Image
-                alt="Profile Picture"
-                src={data?.image ?? ""}
-                width={60}
-                height={60}
-                layout="cover"
-                className=""
-              />
+              <Image alt="Profile Picture" src={data?.image ?? ""} width={60} height={60} layout="cover" className="" />
             </div>
-            <h1 className=" text-xl shadow-red-500 drop-shadow-lg">
-              Your Dashboard{" "}
-            </h1>
+            <h1 className=" text-xl shadow-red-500 drop-shadow-lg">Dashboard</h1>
           </div>
-          <div className="h-1 w-3/4 border-b-orange-50"></div>
-          <div className="  relative top-10 flex w-full flex-col [&_ul_li]:w-full [&_ul_li]:border-b-2 [&_ul_li]:border-zinc-500 [&_ul_li]:py-2 [&_ul_li]:text-center [&_ul_li]:transition [&_ul_li]:duration-300 ">
-            <ul className="">
-              <li className=" border-t-2 hover:bg-zinc-700">Profile</li>
-              <Link href={"/Dashboard/Workouts"}>
-                <li className="           hover:bg-zinc-700">Workouts</li>
-              </Link>
-              <Link href={"/Dashboard/Assignments"}>
-                <li className="           hover:bg-zinc-700">Assignments</li>
-              </Link>
-              <li className="           hover:bg-zinc-700">Progress</li>
-              <li className="           hover:bg-zinc-700">Settings</li>
-            </ul>
-          </div>
+          <div className="h-1 w-3/4 bg-zinc-700"></div>
+          {!user.isLoading && (
+            <div className="  relative flex w-full flex-col items-center justify-center">
+              <ul className=" flex flex-col gap-2">
+                <li>
+                  <DashboardMenuLink href={"/Dashboard/Workouts"} text="Workouts" isTrainer={isTrainer} trainerOnly={true} />
+                </li>
+                <li>
+                  <DashboardMenuLink href={"/Dashboard/Assignments"} text="Assignments" isTrainer={isTrainer} trainerOnly={true} />
+                </li>
+                <li>
+                  <DashboardMenuLink href={"/Dashboard/Settings"} text="⚙️" customFontSite="4xl" isTrainer={isTrainer} trainerOnly={false}/>
+                </li>
+              </ul>
+            </div>
+          )}
         </div>
       )}
     </div>
+  );
+}
+
+type DashboardMenuLinkProps = {
+  href: string;
+  text: string;
+  customFontSite?: string;
+  trainerOnly: boolean;
+  isTrainer: boolean
+};
+
+function DashboardMenuLink(props: DashboardMenuLinkProps) {
+  if(props.trainerOnly && !props.isTrainer) return (<></>)
+
+  let classes =
+    " w-28 h-24 bg-yellow-950/50 justify-center flex items-center rounded-lg hover:rounded-lg border-2 border-yellow-950/50 hover:bg-yellow-900/50 transition duration-150";
+  if (props.customFontSite) {
+    classes += ` text-${props.customFontSite}`;
+  }
+  return (
+    <Link href={props.href} className=" justify-center">
+      <li className={classes}>{props.text}</li>
+    </Link>
   );
 }
