@@ -78,6 +78,7 @@ export default function WorkoutCreationComponent() {
 
   return (
     <div className=" flex w-full flex-col items-baseline gap-4 text-black">
+      <h1 className=" text-xl text-white">Workout Creation</h1>
       {!workouts.data || workouts.data.length == 0 ? (
         <p className=" text-white">No Workouts</p>
       ) : (

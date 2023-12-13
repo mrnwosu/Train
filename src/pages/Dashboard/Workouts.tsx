@@ -27,11 +27,11 @@ export default function Workouts() {
     <DashboardLayout>
       <div className=" flex w-full flex-col gap-2  text-white">
         {isTrainer && <h1 className=" text-2xl">Workout & Movement Page</h1>}
-        <div className="flex flex-row  justify-between">
-          <div className=" flex w-auto flex-col gap-2 rounded-lg border-2 border-zinc-800 p-4">
-            <div className=" flex flex-grow flex-row justify-between">
+        <div className="flex flex-row flex-grow w-full gap-2 px-2">
+          <div className=" flex flex-col gap-2 rounded-lg border-2 border-zinc-800 p-4 w-1/2">
+            <div className=" flex flex-row justify-between">
               <select
-                className=" text-black"
+                className=" text-black w-32"
                 name="movementMuscleGroup"
                 defaultValue={"None"}
                 onChange={(e) => {
@@ -116,8 +116,7 @@ export default function Workouts() {
               </button>
             </form>
           </div>
-          <div className=" flex w-[36em] flex-col gap-2 rounded-lg border-2 border-zinc-800 p-4">
-            <h1>Workout Creation</h1>
+          <div className=" flex flex-col gap-2 rounded-lg border-2 border-zinc-800 p-4 w-1/2">
             <WorkoutCreationComponent />
           </div>
         </div>
