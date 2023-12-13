@@ -1,5 +1,5 @@
 import { type User, type Workout } from "@prisma/client";
-
+import { useState } from "react";
 
 export const AssignmentsForClientComponent = (props: {
   client: User | undefined;
@@ -10,26 +10,18 @@ export const AssignmentsForClientComponent = (props: {
     notes: string | null;
   }[];
 }) => {
+
+
+  
+
   if (!props?.assignments || props.assignments.length === 0) return <div></div>;
   const { client, assignments } = props;
   return (
-    <div className=" flex flex-col gap-2 rounded-md border-2 border-zinc-800 bg-zinc-700">
-      <p className="px-2">{client?.name}</p>
-      {assignments.map((assignment) => {
-        return (
-          <div key={`assignment_${assignment.id}`}>
-            <p className=" bg-black px-2 pb-1">
-              {assignment.workout?.workoutName}
-            </p>
-            <p>Next Workout: {assignment.dayOfWeek}</p>
-            {assignment.notes && (
-              <div className=" overflow-scroll rounded bg-zinc-800 p-4 text-white">
-                <p className=" text-white">{assignment.notes}</p>
-              </div>
-            )}
-          </div>
-        );
-      })}
+    <div className=" flex flex-col gap-2 rounded-md border-2 border-zinc-800">
+      <div className={`py-2 px-4 flex flex-row gap-2 bg-yellow-700 hover:bg-yellow-700 active:bg-yellow-600`}>
+        <p className="text-xl">🔥:</p>
+        <p className="text-xl">{client?.name}</p>
+      </div>
     </div>
   );
 };

@@ -8,8 +8,13 @@ import {
 
 export const userRouter = createTRPCRouter({
   getUser: protectedProcedure
-    .input(z.object({ id: z.string().length(25) }))
+    .input(z.object({ id: z.string() }))
     .query(async ({ ctx, input }) => {
+
+      if(['none', '', 'undefined'].includes(input.id)){
+        return null;
+      }
+
       return ctx.db.user.findFirst({ where: { id: input.id } });
     }),
   getUsers: protectedProcedure
