@@ -1,5 +1,5 @@
 import { type Movement, PrismaClient } from "@prisma/client";
-import _, { create } from "lodash";
+import _ from "lodash";
 import { Service } from "typedi";
 
 @Service()
