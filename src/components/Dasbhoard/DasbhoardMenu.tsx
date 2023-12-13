@@ -19,12 +19,14 @@ export function DashboardMenu() {
         <p>Loading...</p>
       ) : (
         <div className="relative top-3 flex flex-col items-center gap-4 [&>div]:rounded-lg">
-          <div className=" flex w-28 flex-col items-center gap-2 border-2 border-yellow-950/50 bg-yellow-950/50 p-2">
-            <div className=" overflow-hidden rounded-full border-4 border-green-800">
-              <Image alt="Profile Picture" src={data?.image ?? ""} width={60} height={60} layout="cover" className="" />
+          <Link href={"/Dashboard"}>
+            <div className=" flex w-28 flex-col items-center gap-2 border-2 border-yellow-950/50 bg-yellow-950/50 p-2">
+              <div className=" overflow-hidden rounded-full border-4 border-green-800">
+                <Image alt="Profile Picture" src={data?.image ?? ""} width={60} height={60} layout="cover" className="" />
+              </div>
+              <h1 className=" text-xl shadow-red-500 drop-shadow-lg">Dashboard</h1>
             </div>
-            <h1 className=" text-xl shadow-red-500 drop-shadow-lg">Dashboard</h1>
-          </div>
+          </Link>
           <div className="h-1 w-3/4 bg-zinc-700"></div>
           {!user.isLoading && (
             <div className="  relative flex w-full flex-col items-center justify-center">
@@ -36,7 +38,7 @@ export function DashboardMenu() {
                   <DashboardMenuLink href={"/Dashboard/Assignments"} text="Assignments" isTrainer={isTrainer} trainerOnly={true} />
                 </li>
                 <li>
-                  <DashboardMenuLink href={"/Dashboard/Settings"} text="⚙️" customFontSite="4xl" isTrainer={isTrainer} trainerOnly={false}/>
+                  <DashboardMenuLink href={"/Dashboard/Settings"} text="⚙️" customFontSite="4xl" isTrainer={isTrainer} trainerOnly={false} />
                 </li>
               </ul>
             </div>
@@ -52,11 +54,11 @@ type DashboardMenuLinkProps = {
   text: string;
   customFontSite?: string;
   trainerOnly: boolean;
-  isTrainer: boolean
+  isTrainer: boolean;
 };
 
 function DashboardMenuLink(props: DashboardMenuLinkProps) {
-  if(props.trainerOnly && !props.isTrainer) return (<></>)
+  if (props.trainerOnly && !props.isTrainer) return <></>;
 
   let classes =
     " w-28 h-24 bg-yellow-950/50 justify-center flex items-center rounded-lg hover:rounded-lg border-2 border-yellow-950/50 hover:bg-yellow-900/50 transition duration-150";
