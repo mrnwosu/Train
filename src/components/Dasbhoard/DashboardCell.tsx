@@ -9,14 +9,14 @@ export function DashboardCell({
   title: string;
   description: string | undefined;
   children: React.ReactNode | undefined;
-  colspan?: number;
+  colspan?: number | undefined
 }) {
 
   const spanClass = colspan ? `col-span-${colspan}` : "col-span-1";
 
   return (
-    <div className={` ${spanClass} h-80 rounded-md border-8 border-yellow-900/50 bg-yellow-950/50 text-stone-300 shadow-md shadow-zinc-600/20 transition duration-200 hover:text-white`}>
-      <div className=" relative ml-4 mt-4 flex flex-col items-center">
+    <div className={` ${spanClass} h-80 rounded-md border-8 border-zinc-900/50 bg-zinc-950/50 text-zinc-300 shadow-md shadow-zinc-600/20 transition duration-200 hover:text-white`}>
+      <div className=" relative ml-4 smt-4 flex flex-col items-center">
         <h1 className=" text-md relative right-8 w-full text-right ">
           {title}
         </h1>

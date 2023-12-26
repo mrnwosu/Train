@@ -6,6 +6,7 @@ import {
   protectedProcedure,
   trainerOnlyProcedur as trainerOnlyProcedure,
 } from "~/server/api/trpc";
+import { workoutService } from "~/services/serviceMagik";
 
 export const workoutRouter = createTRPCRouter({
   getWorkouts: protectedProcedure.query(async ({ ctx }) => {
@@ -143,5 +144,15 @@ export const workoutRouter = createTRPCRouter({
           id: input.workoutId,
         },
       });
+    }),
+
+    getNextWorkoutForUser: protectedProcedure
+    .input(
+      z.object({
+        clientId: z.string(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      return await workoutService.getNextWorkoutForClient(input.clientId);
     }),
 });

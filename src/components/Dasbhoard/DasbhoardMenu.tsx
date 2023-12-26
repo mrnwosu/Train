@@ -14,13 +14,13 @@ export function DashboardMenu() {
   const isTrainer = user?.data?.role === $Enums.Role.TRAINER;
 
   return (
-    <div className="w-32 bg-yellow-950/50 text-center">
+    <div className="w-32 bg-zinc-950/50 text-center">
       {isLoading ? (
         <p>Loading...</p>
       ) : (
         <div className="relative top-3 flex flex-col items-center gap-4 [&>div]:rounded-lg">
           <Link href={"/Dashboard"}>
-            <div className=" flex w-28 flex-col items-center gap-2 border-2 border-yellow-950/50 bg-yellow-950/50 p-2">
+            <div className=" flex w-28 flex-col items-center gap-2 border-2 border-zinc-950/50 bg-zinc-950/50 p-2">
               <div className=" overflow-hidden rounded-full border-4 border-green-800">
                 <Image alt="Profile Picture" src={data?.image ?? ""} width={60} height={60} layout="cover" className="" />
               </div>
@@ -61,7 +61,7 @@ function DashboardMenuLink(props: DashboardMenuLinkProps) {
   if (props.trainerOnly && !props.isTrainer) return <></>;
 
   let classes =
-    " w-28 h-24 bg-yellow-950/50 justify-center flex items-center rounded-lg hover:rounded-lg border-2 border-yellow-950/50 hover:bg-yellow-900/50 transition duration-150";
+    " w-28 h-24 bg-zinc-950/50 justify-center flex items-center rounded-lg hover:rounded-lg border-2 border-zinc-950/50 hover:bg-zinc-900/50 transition duration-150";
   if (props.customFontSite) {
     classes += ` text-${props.customFontSite}`;
   }
