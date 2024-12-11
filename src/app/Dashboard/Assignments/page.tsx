@@ -1,5 +1,5 @@
 import { api } from "~/utils/api";
-import DashboardLayout from "./DashboardLayout";
+import DashboardLayout from "../layout";
 import { $Enums, type User, type Workout } from "@prisma/client";
 import { useRef, useState } from "react";
 import { returnDayOfWeek, toggleClassForAllElementsByClass, toggleClassForElement } from "~/utils/uiHelper";

@@ -1,11 +1,5 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { type GetServerSidePropsContext } from "next";
-import {
-  getServerSession,
-  type DefaultSession,
-  type NextAuthOptions,
-} from "next-auth";
-// import DiscordProvider from "next-auth/providers/discord";
+import { type DefaultSession, type NextAuthConfig } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import FacebookProvider from "next-auth/providers/facebook";
 
@@ -38,7 +32,25 @@ declare module "next-auth" {
  *
  * @see https://next-auth.js.org/configuration/options
  */
-export const authOptions: NextAuthOptions = {
+export const authConfig = {
+  providers: [
+    GoogleProvider({
+      clientId: env.GOOGLE_CLIENT_ID,
+      clientSecret: env.GOOGLE_CLIENT_SECRET,
+      authorization: {
+        params: {
+          access_type: "offline",
+          prompt: "consent",
+          response_type: "code",
+        },
+      },
+    }),
+    FacebookProvider({
+      clientId: env.FACEBOOK_CLIENT_ID,
+      clientSecret: env.FACEBOOK_CLIENT_SECRET,
+    }),
+  ],
+  adapter: PrismaAdapter(db),
   callbacks: {
     session: ({ session, user }) => ({
       ...session,
@@ -48,39 +60,4 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   },
-  adapter: PrismaAdapter(db),
-  providers: [
-    // DiscordProvider({
-    //   clientId: env.DISCORD_CLIENT_ID,
-    //   clientSecret: env.DISCORD_CLIENT_SECRET,
-    // }),
-    GoogleProvider({
-      clientId: env.GOOGLE_CLIENT_ID,
-      clientSecret: env.GOOGLE_CLIENT_SECRET,
-      authorization:{
-        params:{
-          access_type: "offline",
-          prompt: "consent",
-          response_type: "code"
-        }
-        ,
-      },
-    }),
-    FacebookProvider({
-      clientId: env.FACEBOOK_CLIENT_ID,
-      clientSecret: env.FACEBOOK_CLIENT_SECRET,
-    }),
-  ],
-};
-
-/**
- * Wrapper for `getServerSession` so that you don't need to import the `authOptions` in every file.
- *
- * @see https://next-auth.js.org/configuration/nextjs
- */
-export const getServerAuthSession = (ctx: {
-  req: GetServerSidePropsContext["req"];
-  res: GetServerSidePropsContext["res"];
-}) => {
-  return getServerSession(ctx.req, ctx.res, authOptions);
-};
+} satisfies NextAuthConfig;

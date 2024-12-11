@@ -1,10 +1,10 @@
 import { api } from "~/utils/api";
-import DashboardLayout from "./DashboardLayout";
+import DashboardLayout from "../layout";
 import { useSession } from "next-auth/react";
 import { $Enums } from "@prisma/client";
 import { useState } from "react";
-import WorkoutCreationComponent from "../../components/Workouts/WorkoutCreationComponent";
-import { MovementSummaryComponent } from "../../components/Workouts/MovementSummaryComponent";
+import WorkoutCreationComponent from "../../../components/Workouts/WorkoutCreationComponent";
+import { MovementSummaryComponent } from "../../../components/Workouts/MovementSummaryComponent";
 
 export default function Workouts() {
   const [currentMovementFilter, setCurrentMovementFilter] = useState<
