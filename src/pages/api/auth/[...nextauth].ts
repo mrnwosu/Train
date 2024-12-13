@@ -1,10 +1,10 @@
 import NextAuth from "next-auth";
 
-import { authConfig } from "~/server/auth/config";
+import { authOptions } from "~/server/auth";
 
 
 
-authConfig.pages = {
+authOptions.pages = {
     signIn: "/auth/signin",
     // signOut: "/auth/signout",
     // error: "/auth/error",
@@ -12,4 +12,4 @@ authConfig.pages = {
     // newUser: "/auth/new-user",
     };
 
-export default NextAuth(authConfig);
+export default NextAuth(authOptions);

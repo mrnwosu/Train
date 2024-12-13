@@ -4,7 +4,7 @@ import type {
 } from "next";
 import { type ClientSafeProvider, getProviders, signIn } from "next-auth/react";
 import { getServerSession } from "next-auth/next";
-import { authConfig } from "../../server/auth/config";
+import { authOptions } from "../../server/auth";
 import Image from "next/image";
 import ProviderCircleButton from "./providerCircleButton";
 
@@ -42,7 +42,7 @@ export default function SignIn({
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const session = await getServerSession(context.req, context.res, authConfig);
+  const session = await getServerSession(context.req, context.res, authOptions);
 
   // If the user is already logged in, redirect.
   // Note: Make sure not to redirect to the same page

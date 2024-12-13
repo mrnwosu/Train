@@ -1,5 +1,5 @@
 import { DashboardCell } from "~/components/Dasbhoard/DashboardCell";
-import DashboardLayout from "./layout";
+import DashboardLayout from "./DashboardLayout";
 import { api } from "~/utils/api";
 import { useSession } from "next-auth/react";
 
